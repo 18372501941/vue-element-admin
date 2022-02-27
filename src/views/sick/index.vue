@@ -7,7 +7,7 @@
       </el-select>
       <span>职业病亚类：</span>
       <el-input v-model="listQuery.subSpecie" placeholder="请输入" style="width: 200px;" clearable class="filter-item" @input="handleFilter" />
-      <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+      <!--  <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
         导出
       </el-button> -->
     </div>
