@@ -6,15 +6,10 @@
       </div>
       <div class="login-box-right">
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-
           <div class="title-container">
             <h3 class="title">企业职业健康管理自查系统</h3>
           </div>
-
           <el-form-item prop="username">
-            <!-- <span class="svg-container">
-              <svg-icon icon-class="user" />
-            </span> -->
             <el-input
               ref="username"
               v-model="loginForm.username"
@@ -25,10 +20,8 @@
               autocomplete="on"
             >
             <svg-icon slot="prefix" icon-class="user" />
-            <!-- <i slot="prefix" class="el-input__icon el-icon-search"></i> -->
             </el-input>
           </el-form-item>
-
           <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
             <el-form-item prop="password">
               <el-input
@@ -45,13 +38,7 @@
                 @keyup.enter.native="handleLogin"
               >
               <svg-icon slot="prefix" icon-class="password" />
-              <!-- <span slot="suffix" class="svg-container">
-                <svg-icon icon-class="password" />
-              </span> -->
               <svg-icon slot="suffix" @click="showPwd" :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-              <!-- <span   class="show-pwd" @click="showPwd">
-                <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-              </span> -->
               </el-input>
             </el-form-item>
           </el-tooltip>
@@ -69,21 +56,6 @@
               @click.native.prevent="handleLogin"
             >注册</el-button>
           </div>
-
-          <!-- <div style="position:relative">
-            <div class="tips">
-              <span>Username : admin</span>
-              <span>Password : any</span>
-            </div>
-            <div class="tips">
-              <span style="margin-right:18px;">Username : editor</span>
-              <span>Password : any</span>
-            </div>
-
-            <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-              Or connect with
-            </el-button>
-          </div> -->
         </el-form>
         <el-dialog title="Or connect with" :visible.sync="showDialog">
           Can not be simulated on local, so please combine you own business simulation! ! !

@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="pageJump('sick')">
+      <div class="card-panel" @click="pageJump('occupational-disease')">
         <div class="card-panel-icon-wrapper icon-sick">
           <svg-icon icon-class="sick-icon" class-name="card-panel-icon" />
         </div>
@@ -14,7 +14,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="pageJump('messages')">
+      <div class="card-panel" @click="pageJump('hf-limite')">
         <div class="card-panel-icon-wrapper icon-danger">
           <svg-icon icon-class="danger" class-name="card-panel-icon" />
         </div>
@@ -27,7 +27,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="pageJump('purchases')">
+      <div class="card-panel" @click="pageJump('health-search')">
         <div class="card-panel-icon-wrapper icon-health">
           <svg-icon icon-class="health" class-name="card-panel-icon" />
         </div>
@@ -40,7 +40,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="pageJump('shoppings')">
+      <div class="card-panel" @click="pageJump('punish')">
         <div class="card-panel-icon-wrapper icon-arrow">
           <svg-icon icon-class="arrow" class-name="card-panel-icon" />
         </div>
