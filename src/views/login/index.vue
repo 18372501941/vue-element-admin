@@ -1,88 +1,71 @@
 <template>
   <div class="login-container">
-
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-
-      <div class="title-container">
-        <h3 class="title">企业职业健康管理自查系统</h3>
+    <div class="login-wrap">
+      <div class="login-box-left">
+        <img src="../../assets/login/main_icon.png" alt="">
       </div>
-
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
-      </el-form-item>
-
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
-          <span class="svg-container">
-            <svg-icon icon-class="password" />
-          </span>
-          <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            placeholder="Password"
-            name="password"
-            tabindex="2"
-            autocomplete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
-          />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
-        </el-form-item>
-      </el-tooltip>
-      <div class="index-btn-wrap">
-        <el-button
-          :loading="loading"
-          type="primary"
-          style="width:45%;margin-bottom:30px;"
-          @click.native.prevent="handleLogin"
-        >登录</el-button>
-        <el-button
-          :loading="loading"
-          type="primary"
-          style="width:45%;margin-bottom:30px;"
-          @click.native.prevent="handleLogin"
-        >注册</el-button>
+      <div class="login-box-right">
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+          <div class="title-container">
+            <h3 class="title">企业职业健康管理自查系统</h3>
+          </div>
+          <el-form-item prop="username">
+            <el-input
+              ref="username"
+              v-model="loginForm.username"
+              placeholder="用户名称"
+              name="username"
+              type="text"
+              tabindex="1"
+              autocomplete="on"
+            >
+            <svg-icon slot="prefix" icon-class="user" />
+            </el-input>
+          </el-form-item>
+          <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+            <el-form-item prop="password">
+              <el-input
+                :key="passwordType"
+                ref="password"
+                v-model="loginForm.password"
+                :type="passwordType"
+                placeholder="密码"
+                name="password"
+                tabindex="2"
+                autocomplete="on"
+                @keyup.native="checkCapslock"
+                @blur="capsTooltip = false"
+                @keyup.enter.native="handleLogin"
+              >
+              <svg-icon slot="prefix" icon-class="password" />
+              <svg-icon slot="suffix" @click="showPwd" :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+              </el-input>
+            </el-form-item>
+          </el-tooltip>
+          <div class="index-btn-wrap">
+            <el-button
+              :loading="loading"
+              type="primary"
+              style="width:45%;margin-bottom:30px;"
+              @click.native.prevent="handleLogin"
+            >登录</el-button>
+            <el-button
+              :loading="loading"
+              type="primary"
+              style="width:45%;margin-bottom:30px;"
+              @click.native.prevent="handleLogin"
+            >注册</el-button>
+          </div>
+        </el-form>
+        <el-dialog title="Or connect with" :visible.sync="showDialog">
+          Can not be simulated on local, so please combine you own business simulation! ! !
+          <br>
+          <br>
+          <br>
+          <social-sign />
+        </el-dialog>
       </div>
-
-      <!-- <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div> -->
-    </el-form>
-
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -223,39 +206,40 @@ $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
-    color: $cursor;
+    // color: $cursor;
   }
 }
 
 /* reset element-ui css */
 .login-container {
-  .el-input {
-    display: inline-block;
-    height: 47px;
-    width: 85%;
+   .el-input {
+     display: inline-block;
+     height: 47px;
+     width: 100%;
 
     input {
-      background: transparent;
-      border: 0px;
-      -webkit-appearance: none;
-      border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 47px;
-      caret-color: $cursor;
+  //     background: transparent;
+  //     border: 0px;
+  //     -webkit-appearance: none;
+  //     border-radius: 0px;
+  //     padding: 12px 5px 12px 15px;
+  //     color: $light_gray;
+      //  height: 47px;
+       caret-color: $cursor;
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
-      }
+         -webkit-text-fill-color: $cursor !important;
+       }
     }
-  }
+   }
 
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
+    margin-bottom: 32px;
+    // border: 1px solid #dcdfe6;
+    // background: rgba(0, 0, 0, 0.1);
+    // border-radius: 5px;
+    // color: #454545;
   }
 }
 .index-btn-wrap{
@@ -273,16 +257,40 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  // background-color: $bg;
+  background: #0088f4;
   overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   // background-image: url('../../assets/login/bg_icon.jpg');
   // background-size: contain;
   // background-repeat: no-repeat;
+  .login-wrap{
+    width: 85%;
+    height: 85vh;
+    background: #fff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    .login-box-left{
+      box-sizing: border-box;
+      img{
+        width: 360px;
+      }
+    }
+    .login-box-right{
+
+    }
+  }
   .login-form {
     position: relative;
-    width: 520px;
+    width: 100%;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 0px 0 0;
     margin: 0 auto;
     overflow: hidden;
   }
@@ -312,8 +320,9 @@ $light_gray:#eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
+      // color: $light_gray;
+      color: #1890ff;
+      margin: 0px auto 60px auto;
       text-align: center;
       font-weight: bold;
     }
