@@ -1,44 +1,48 @@
 <template>
   <div class="app-container">
-    <div class="filter-container search">
-      <span>职业病种类：</span>
-      <el-select v-model="listQuery.specie" placeholder="请选择" filterable clearable style="width: 200px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in speciesOption" :key="item" :label="item" :value="item" />
-      </el-select>
-      <span>职业病亚类：</span>
-      <el-input v-model="listQuery.subSpecie" placeholder="请输入" style="width: 200px;" clearable class="filter-item" @input="handleFilter" />
+    <el-card class="box-card" style="margin-bottom:34px">
+      <div class="search">
+        <span>职业病种类：</span>
+        <el-select v-model="listQuery.specie" placeholder="请选择" filterable clearable style="width: 200px" class="filter-item" @change="handleFilter">
+          <el-option v-for="item in speciesOption" :key="item" :label="item" :value="item" />
+        </el-select>
+        <span>职业病亚类：</span>
+        <el-input v-model="listQuery.subSpecie" placeholder="请输入" style="width: 200px;" clearable class="filter-item" @input="handleFilter" />
       <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
         导出
       </el-button> -->
-    </div>
+      </div>
+    </el-card>
 
-    <el-table
-      :data="sickTypeList"
-      border
-      :row-key="row => { return row.id + row.subSpecies }"
-      highlight-current-row
-      default-expand-all
-      style="width: 100%;"
-      height="calc(100vh - 168px)"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-      :header-cell-style="{ background: '#F5F5F5', color: '#9B9B9B' }"
-    >
-      <el-table-column label="序号" prop="id" align="center" width="80">
-        <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="种类" class-name="status-col">
-        <template slot-scope="{row}">
-          <span style="font-weight:600">{{ row.species }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="亚类" class-name="status-col">
-        <template slot-scope="{row}">
-          <span>{{ row.subSpecies }}</span>
-        </template>
-      </el-table-column>
-    </el-table>
+    <el-card class="box-card">
+      <el-table
+        :data="sickTypeList"
+        border
+        :row-key="row => { return row.id + row.subSpecies }"
+        highlight-current-row
+        default-expand-all
+        style="width: 100%;"
+        height="calc(100vh - 168px)"
+        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+        :header-cell-style="{ background: '#F5F5F5', color: '#9B9B9B' }"
+      >
+        <el-table-column label="序号" prop="id" align="center" width="80">
+          <template slot-scope="{row}">
+            <span>{{ row.id }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="种类" class-name="status-col">
+          <template slot-scope="{row}">
+            <span style="font-weight:600">{{ row.species }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="亚类" class-name="status-col">
+          <template slot-scope="{row}">
+            <span>{{ row.subSpecies }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
 
   </div>
 </template>
