@@ -2,14 +2,14 @@
     <div class="hf-limite-wrap">
         <el-card class="box-card" style="margin-bottom:34px">
             <el-form :inline="true" ref="ruleForm" :model="searchData" :rules="rules" class="hf-limite-form">
+                <el-form-item label="危害因素分类"  prop="classify">
+                    <el-select v-model="searchData.classify" @change="changeSelect" placeholder="请选择">
+                        <el-option label="化学因素" value="chemistry"></el-option>
+                        <el-option label="物理因素" value="physics"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="危害因素名称"  prop="name">
                     <el-input v-model="searchData.name" placeholder="请输入"></el-input>
-                </el-form-item>
-                <el-form-item label="危害因素分类"  prop="classify">
-                    <el-select v-model="searchData.classify" placeholder="请选择">
-                        <el-option label="物理因素" value="physics"></el-option>
-                        <el-option label="化学因素" value="chemistry"></el-option>
-                    </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSearch('ruleForm')">查询</el-button>
@@ -22,7 +22,7 @@
             <el-tab-pane label="化学因素" name="chemistry">
                 <el-table
                 v-if="activeName === 'chemistry'"
-                :data="tableData"
+                :data="searchTableData"
                 style="width: 100%">
                 <el-table-column
                     prop="classify"
@@ -87,7 +87,7 @@
             <el-tab-pane label="物理因素" name="physics">
                 <el-table
                     v-if="activeName === 'physics'"
-                    :data="tableList"
+                    :data="searchTableList"
                     border
                     style="width: 100%">
                     <el-table-column
@@ -284,16 +284,39 @@ export default {
                 classify: [
                     { required: false, message: '请选择危害因素分类', trigger: 'change' }
                 ],
-            }
+            },
+            searchTableData:[],
+            searchTableList:[],
         }
     },
+    created(){
+        this.searchTableData = this.tableData;
+        this.searchTableList = this.tableList;
+    },
     methods:{
+        changeSelect(value){
+            this.activeName = value;
+        },
+        fuzzySearch(list,value,str){
+            let arr = [];
+            list.map(function(item) {
+            if (item[str].indexOf(value) !== -1) {
+                arr.push(item);
+            }
+            });
+            return arr;
+        },
         checkDetail(){
             this.dialogVisible = true
         },
         onSearch(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    if(this.activeName === 'chemistry'){
+                        this.searchTableData = this.fuzzySearch(this.tableData,this.searchData.name,'name');
+                    }else{
+                        this.searchTableList = this.fuzzySearch(this.tableList,this.searchData.name,'name');
+                    }
                     
                 } else {
                     
@@ -303,6 +326,8 @@ export default {
         },
         onReset(formName){
             this.$refs[formName].resetFields();
+            this.searchTableData = this.tableData;
+            this.searchTableList = this.tableList;
         },
     }
 }

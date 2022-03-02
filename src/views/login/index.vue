@@ -5,10 +5,14 @@
         <img src="../../assets/login/main_icon.png" alt="">
       </div>
       <div class="login-box-right">
-        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form"  label-position="left">
           <div class="title-container">
             <h3 class="title">企业职业健康管理自查系统</h3>
           </div>
+          <el-tabs style="margin-bottom:15px"  v-model="activeName" centered>
+            <el-tab-pane label="账号密码登录" name="login"></el-tab-pane>
+            <el-tab-pane label="注册账号" name="register"></el-tab-pane>
+          </el-tabs>
           <el-form-item prop="username">
             <el-input
               ref="username"
@@ -16,13 +20,12 @@
               placeholder="用户名称"
               name="username"
               type="text"
-              tabindex="1"
-              autocomplete="on"
+              
             >
             <svg-icon slot="prefix" icon-class="user" />
             </el-input>
           </el-form-item>
-          <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+          <!-- <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual> -->
             <el-form-item prop="password">
               <el-input
                 :key="passwordType"
@@ -31,29 +34,30 @@
                 :type="passwordType"
                 placeholder="密码"
                 name="password"
-                tabindex="2"
-                autocomplete="on"
+                
                 @keyup.native="checkCapslock"
                 @blur="capsTooltip = false"
                 @keyup.enter.native="handleLogin"
               >
               <svg-icon slot="prefix" icon-class="password" />
-              <svg-icon slot="suffix" @click="showPwd" :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+              <svg-icon  slot="suffix" @click="showPwd" :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
               </el-input>
             </el-form-item>
-          </el-tooltip>
+          <!-- </el-tooltip> -->
           <div class="index-btn-wrap">
             <el-button
+              v-if="activeName === 'login'"
               :loading="loading"
               type="primary"
-              style="width:45%;margin-bottom:30px;"
+              style="width:100%;margin-bottom:30px;"
               @click.native.prevent="handleLogin"
             >登录</el-button>
             <el-button
+              v-else
               :loading="loading"
               type="primary"
-              style="width:45%;margin-bottom:30px;"
-              @click.native.prevent="handleLogin"
+              style="width:100%;margin-bottom:30px;"
+              @click.native.prevent="handleRegister"
             >注册</el-button>
           </div>
         </el-form>
@@ -93,13 +97,14 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur', message: '请输入账号', }],
+        password: [{ required: true, trigger: 'blur', message: '请输入密码', }]
       },
+      activeName:'login',
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
@@ -124,11 +129,11 @@ export default {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
-    if (this.loginForm.username === '') {
-      this.$refs.username.focus()
-    } else if (this.loginForm.password === '') {
-      this.$refs.password.focus()
-    }
+    // if (this.loginForm.username === '') {
+    //   this.$refs.username.focus()
+    // } else if (this.loginForm.password === '') {
+    //   this.$refs.password.focus()
+    // }
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
@@ -146,6 +151,21 @@ export default {
       }
       this.$nextTick(() => {
         this.$refs.password.focus()
+      })
+    },
+    handleRegister(){
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.$message({
+            message: '恭喜你注册成功，请登录',
+            type: 'success'
+          });
+          this.activeName = 'login';
+          this.$refs.loginForm.resetFields();
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
     },
     handleLogin() {
@@ -225,7 +245,7 @@ $cursor: #fff;
   //     padding: 12px 5px 12px 15px;
   //     color: $light_gray;
       //  height: 47px;
-       caret-color: $cursor;
+      //  caret-color: $cursor;
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
@@ -241,6 +261,23 @@ $cursor: #fff;
     // border-radius: 5px;
     // color: #454545;
   }
+  .el-tabs__nav-wrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0px;
+}
+.el-tabs__nav-scroll{
+  text-align: center;
+}
+.el-tabs__nav{
+  float:none;
+  margin: 0 auto;
+  display: inline-block;
+ 
+}
 }
 .index-btn-wrap{
   display: flex;
@@ -258,15 +295,15 @@ $light_gray:#eee;
   min-height: 100%;
   width: 100%;
   // background-color: $bg;
-  background: #0088f4;
+  // background: #0088f4;
   overflow: hidden;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  // background-image: url('../../assets/login/bg_icon.jpg');
-  // background-size: contain;
-  // background-repeat: no-repeat;
+  background-image: url('../../assets/login/bg_icon.png');
+  background-size: cover;
+  background-repeat: no-repeat;
   .login-wrap{
     width: 85%;
     height: 85vh;
@@ -277,18 +314,20 @@ $light_gray:#eee;
     justify-content: space-around;
     align-items: center;
     .login-box-left{
+      width: 50%;
       box-sizing: border-box;
+      text-align: center;
       img{
-        width: 360px;
+        width: 70%;
       }
     }
     .login-box-right{
-
+      width: 50%;
     }
   }
   .login-form {
     position: relative;
-    width: 100%;
+    width: 76%;
     max-width: 100%;
     padding: 0px 0 0;
     margin: 0 auto;
@@ -322,7 +361,7 @@ $light_gray:#eee;
       font-size: 26px;
       // color: $light_gray;
       color: #1890ff;
-      margin: 0px auto 60px auto;
+      margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
     }

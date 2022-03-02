@@ -19,7 +19,7 @@
     </el-card>
     <el-card class="box-card">
       <el-table
-        :data="tableData"
+        :data="searchTableData"
         style="width: 100%"
         border
       >
@@ -122,23 +122,39 @@ export default {
           selfCheckContent: '职业病危害严重的用人单位，应当委托具有相应资质的职业卫生技术服务机构，每年至少进行一次职业病危害因素检测。',
           aboutLaw: '《工作场所职业卫生管理规定》 第二十条 职业病危害严重的用人单位，应当委托具有相应资质的职业卫生技术服务机构，每年至少进行一次职业病危害因素检测，每三年至少进行一次职业病危害现状评价。'
         },
-      ]
+      ],
+      searchTableData:[],
     }
+  },
+  created(){
+    this.searchTableData = this.tableData;
   },
   methods: {
     onSearch(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    
+                    let arr = this.searchData.type ? this.fuzzySearch(this.tableData,this.searchData.type,'typeId') : this.tableData;
+                    this.searchTableData = this.fuzzySearch(arr,this.searchData.selfCheck,'selfCheck');
                 } else {
-                    
                     return false;
                 }
             });
-        },
-    onReset(formName){
-            this.$refs[formName].resetFields();
     },
+    onReset(formName){
+      this.$refs[formName].resetFields();
+      this.searchTableData = this.tableData;
+    },
+    fuzzySearch(list,value,str){
+        let arr = [];
+        list.map(function(item) {
+          if (str === 'selfCheck' && item[str].indexOf(value) !== -1) {
+            arr.push(item);
+          }else if(str === 'typeId' && item[str] === value){
+            arr.push(item);
+          }
+        });
+        return arr;
+    }
   }
 }
 </script>
