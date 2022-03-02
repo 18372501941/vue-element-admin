@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             危害因素限值
           </div>
-          <count-to :start-val="0" :end-val="10" suffix="/358种" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="6" suffix="/358种" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             健康管理自查
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="6" suffix="种" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -48,7 +48,8 @@
           <div class="card-panel-text">
             行政处罚条款
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <div class="card-panel-num">暂未设计
+          </div>
         </div>
       </div>
     </el-col>
