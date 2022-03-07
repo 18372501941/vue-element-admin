@@ -79,7 +79,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '主页', icon: 'dashboard', affix: true }
+        meta: { title: '主页', icon: 'dashboard', noCache: true }
       }
     ]
   },
@@ -105,7 +105,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/hf-limite/index'),
         name: 'HFLimite',
-        meta: { title: '危害因素限值', icon: 'el-icon-odometer', affix: true }
+        meta: { title: '危害因素限值', icon: 'el-icon-odometer', noCache: true }
       }
     ]
   },
